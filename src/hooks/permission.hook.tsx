@@ -1,4 +1,4 @@
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../store/store-hooks";
 import { hasPermission } from "../utils/permission.util";
 
 const usePermission = (permissionRequired: string[]) => {
