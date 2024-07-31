@@ -4,7 +4,7 @@ import { http } from "../../configs/http-client.config";
 export interface AccessTokenPayloadType {}
 export interface AccessTokenAPIResponseType {}
 
-const accessTokenAPI = createAsyncThunk(
+export const accessTokenAPI = createAsyncThunk(
   "api.accessToken",
   async (data: AccessTokenPayloadType, thunkAPI) => {
     const url = "";
@@ -35,7 +35,7 @@ const initialState: AccessTokenInitialState = {
   error: null,
 };
 
-export const accessTokenSlice = createSlice({
+const accessTokenSlice = createSlice({
   name: "accessToken",
   initialState,
   reducers: {},
@@ -44,7 +44,7 @@ export const accessTokenSlice = createSlice({
       .addCase(accessTokenAPI.fulfilled, (state, action) => {
         state.data = action.payload || null;
       })
-      .addCase(accessTokenAPI.rejected, (state, action) => {
+      .addCase(accessTokenAPI.rejected, (state) => {
         state.error = "Failed";
       })
       .addCase(accessTokenAPI.pending, (state) => {
@@ -53,3 +53,5 @@ export const accessTokenSlice = createSlice({
       });
   },
 });
+
+export default accessTokenSlice.reducer;

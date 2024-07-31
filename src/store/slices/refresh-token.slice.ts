@@ -1,10 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { http } from "../../configs/http-client.config";
-export interface RefreshTokenPayloadType {}
-export interface RefreshTokenAPIResponseType {}
+export interface RefreshTokenPayloadType {
+  refreshToken: string;
+}
+export interface RefreshTokenAPIResponseType {
+  data: any;
+}
 
-const refreshTokenAPI = createAsyncThunk(
+export const refreshTokenAPI = createAsyncThunk(
   "api.refreshToken",
   async (data: RefreshTokenPayloadType, thunkAPI) => {
     const url = "";
@@ -35,7 +39,7 @@ const initialState: RefreshTokenInitialState = {
   error: null,
 };
 
-export const refreshTokenSlice = createSlice({
+const refreshTokenSlice = createSlice({
   name: "refreshToken",
   initialState,
   reducers: {},
@@ -53,3 +57,4 @@ export const refreshTokenSlice = createSlice({
       });
   },
 });
+export default refreshTokenSlice.reducer;

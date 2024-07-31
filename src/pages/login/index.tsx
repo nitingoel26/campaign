@@ -1,15 +1,13 @@
-import { useMsal } from "@azure/msal-react";
-
+import useAuthHandlers from "../../hooks/auth.hook";
 const LoginPage = () => {
-  const { instance } = useMsal();
-
-  const initializeSignIn = () => {
-    instance.loginRedirect();
-  };
-
+  const { handleLogin } = useAuthHandlers();
+  console.log("login page");
   return (
     <>
-      <div onClick={initializeSignIn}>Sign in</div>
+      <h1>Welcome to login page</h1>
+      <div onClick={handleLogin}>Sign in</div>
     </>
   );
 };
+
+export default LoginPage;

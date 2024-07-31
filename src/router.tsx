@@ -1,12 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
-import PermissionGuard from "./containers/permissions/permission-gaurd.container";
 import privateRoutes from "./routes/private-routes.config";
 import publicRoutes from "./routes/public-routes.config";
-
+import { Outlet } from "react-router-dom";
 export const publicRouter = createBrowserRouter([
   {
     path: "",
-    element: <></>,
+    element: (
+      <>
+        <Outlet />
+      </>
+    ),
     children: publicRoutes.map(({ path, Component }) => ({
       path,
       element: <Component />,
@@ -17,14 +20,14 @@ export const publicRouter = createBrowserRouter([
 export const privateRouter = createBrowserRouter([
   {
     path: "",
-    element: <></>,
-    children: privateRoutes.map(({ path, Component, permission }) => ({
+    element: (
+      <>
+        <Outlet />
+      </>
+    ),
+    children: privateRoutes.map(({ path, Component }) => ({
       path,
-      element: (
-        <PermissionGuard permission={permission}>
-          <Component />
-        </PermissionGuard>
-      ),
+      element: <Component />,
     })),
   },
 ]);
