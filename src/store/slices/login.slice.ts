@@ -1,23 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface loginState {
-  loginPopup: boolean;
+  userToken: string | null;
 }
 const initialState: loginState = {
-  loginPopup: false,
+  userToken: null,
 };
 const loginSlice = createSlice({
   name: "loginSlice",
   initialState,
   reducers: {
-    showLoginPopup: (state) => {
-      state.loginPopup = true;
-    },
-    hideLoginPopup: (state) => {
-      state.loginPopup = false;
+    setLoginToken: (state, action) => {
+      state.userToken = action.payload.token;
     },
   },
 });
 
-export const { showLoginPopup, hideLoginPopup } = loginSlice.actions;
+export const { setLoginToken } = loginSlice.actions;
 export default loginSlice.reducer;

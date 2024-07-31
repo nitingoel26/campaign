@@ -1,9 +1,10 @@
 import type { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../store/store-hooks";
+import { useAppDispatch, useAppSelector } from "../store/store-hooks";
 import { refreshTokenAPI } from "../store/slices/refresh-token.slice";
 import { RefreshTokenAPIResponseType } from "../store/slices/refresh-token.slice";
+import { setLoginToken } from "../store/slices/login.slice";
 type RequestConfigOptionalKeys = Pick<
   AxiosRequestConfig,
   "headers" | "params" | "data" | "baseURL"
@@ -28,7 +29,7 @@ const axiosInstance = axios.create(baseOptions);
 axiosInstance.interceptors.request.use(
   (config) => {
     const customConfig = config as CustomAxiosRequestConfig;
-    const token = localStorage.getItem("access_token");
+    const token = useAppSelector((state) => state.login.userToken);
     if (token) {
       customConfig.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -57,8 +58,9 @@ axiosInstance.interceptors.response.use(
         }
         dispatch(refreshTokenAPI({ refreshToken })).then((response) => {
           const result = response?.payload as RefreshTokenAPIResponseType;
-          const newAccessToken = result?.data?.accessToken;
-          localStorage.setItem("access_token", newAccessToken);
+          const newAccessToken = result?.data?.userToken;
+          dispatch(setLoginToken({ token: newAccessToken }));
+          localStorage.setItem("userToken", newAccessToken);
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${newAccessToken}`;

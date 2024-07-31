@@ -1,8 +1,7 @@
 const MSAL_CONFIG = {
   auth: {
     clientId: "YOUR_CLIENT_ID",
-    authority:
-      "https://login.microsoftonline.com/YOUR_TENANT_NAME.onmicrosoft.com",
+    authority: "https://login.microsoftonline.com/common",
     //redirectUri: "http://localhost:3000",
   },
   cache: {
